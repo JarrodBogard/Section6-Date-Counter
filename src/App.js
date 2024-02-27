@@ -10,51 +10,36 @@ export default function App() {
 }
 
 function Counter() {
-  const [step, setStep] = useState(1); // alt solution set step default value to 0
+  const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
 
-  // const date = new Date("June 21 2027");
   const date = new Date();
   date.setDate(date.getDate() + count);
 
+  function handleReset() {
+    setStep(1);
+    setCount(0);
+  }
+
   return (
     <div>
-      {/* <div>
-        <button
-          onClick={() =>
-            setStep((current) => (step > 0 ? current - 1 : current))
-          }
-        >
-          -
-        </button>
-        <span>Step: {step}</span>
-        <button onClick={() => setStep((current) => current + 1)}>+</button>
-      </div> */}
-      {/* <div>
-        <button
-          onClick={() =>
-            setCount((current) => (step === 0 ? current - 1 : current - step))
-          }
-        >
-          -
-        </button>
-        <span>Count: {count}</span>
-        <button
-        onClick={() =>
-          setCount((current) => (step === 0 ? current + 1 : current + step))
-        }
-        >
-        +
-        </button>
-      </div> */}
       <div>
-        <button onClick={() => setStep((current) => current - 1)}>-</button>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={step}
+          onChange={(e) => setStep(Number(e.target.value))}
+        />
         <span>Step: {step}</span>
-        <button onClick={() => setStep((current) => current + 1)}>+</button>
       </div>
       <div>
         <button onClick={() => setCount((current) => current - step)}>-</button>
-        <span>Count: {count}</span>
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+        />
         <button onClick={() => setCount((current) => current + step)}>+</button>
       </div>
       <p>
@@ -67,6 +52,12 @@ function Counter() {
         </span>
         <span>{date.toDateString()}</span>
       </p>
+
+      {count !== 0 || step !== 1 ? (
+        <div>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+      ) : null}
     </div>
   );
 }
